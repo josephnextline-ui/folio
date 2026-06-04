@@ -1,0 +1,113 @@
+<!doctype html>
+<html lang="en" data-theme="auto">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+  <title>Folio</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300..700;1,9..144,300..600&family=Inter:wght@300;400;500;600;700&family=Caveat:wght@400;600&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="/styles.css" />
+  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Ctext y='26' font-size='28'%3E%E2%9D%80%3C/text%3E%3C/svg%3E" />
+</head>
+<body>
+  <div id="app"></div>
+
+  <!-- Templates rendered by app.js -->
+  <template id="tpl-setup">
+    <div class="auth-shell">
+      <div class="auth-card setup-card">
+        <div class="brand"><span class="brand-glyph">❀</span><span class="brand-name">Folio</span></div>
+        <h1 class="auth-title">Begin a folio for two.</h1>
+        <p class="auth-sub">Set up the two accounts that will share this space. You can rename and re-style anything later.</p>
+
+        <div class="setup-grid">
+          <div class="setup-col">
+            <label class="field-label">First name</label>
+            <input class="field" data-bind="user1.display_name" placeholder="e.g. Aria" autocomplete="off" />
+            <label class="field-label">Password</label>
+            <input class="field" data-bind="user1.password" type="password" placeholder="A private password" />
+            <label class="field-label">Accent</label>
+            <div class="accent-row" data-accent="user1">
+              <button type="button" data-color="#b8a4d4" style="background:#b8a4d4"></button>
+              <button type="button" data-color="#9bb8e0" style="background:#9bb8e0"></button>
+              <button type="button" data-color="#a8d4c4" style="background:#a8d4c4"></button>
+              <button type="button" data-color="#d4b8a4" style="background:#d4b8a4"></button>
+            </div>
+          </div>
+          <div class="setup-col">
+            <label class="field-label">First name</label>
+            <input class="field" data-bind="user2.display_name" placeholder="e.g. Sam" autocomplete="off" />
+            <label class="field-label">Password</label>
+            <input class="field" data-bind="user2.password" type="password" placeholder="A private password" />
+            <label class="field-label">Accent</label>
+            <div class="accent-row" data-accent="user2">
+              <button type="button" data-color="#f4b8b8" style="background:#f4b8b8"></button>
+              <button type="button" data-color="#f4d4a8" style="background:#f4d4a8"></button>
+              <button type="button" data-color="#e8b4d4" style="background:#e8b4d4"></button>
+              <button type="button" data-color="#b4d4a8" style="background:#b4d4a8"></button>
+            </div>
+          </div>
+        </div>
+
+        <div class="divider"><span>shared secret</span></div>
+        <p class="hint">A phrase only the two of you know. It encrypts every message and diary entry on your device — the server never sees it. <strong>If you lose it, the data cannot be recovered.</strong></p>
+        <input class="field" data-bind="passphrase" type="password" placeholder="Your shared phrase" />
+        <input class="field" data-bind="passphrase_confirm" type="password" placeholder="Confirm the phrase" />
+
+        <button class="btn-primary" data-action="setup">Create our Folio</button>
+        <div class="auth-error" data-error></div>
+      </div>
+    </div>
+  </template>
+
+  <template id="tpl-login">
+    <div class="auth-shell">
+      <div class="auth-card">
+        <div class="brand"><span class="brand-glyph">❀</span><span class="brand-name">Folio</span></div>
+        <p class="kicker">Sign in</p>
+        <h1 class="auth-title">Welcome back.</h1>
+        <p class="auth-sub">A quiet place, only for the two of you.</p>
+        <label class="field-label">Your name</label>
+        <input class="field" type="text" placeholder="e.g. Meera" data-bind="name" autocomplete="username" autofocus />
+        <label class="field-label">Password</label>
+        <input class="field" type="password" placeholder="Your password" data-bind="password" autocomplete="current-password" />
+        <button class="btn-primary" data-action="login">Open Folio</button>
+        <div class="auth-error" data-error></div>
+      </div>
+    </div>
+  </template>
+
+  <template id="tpl-unlock">
+    <div class="auth-shell">
+      <div class="auth-card">
+        <div class="brand"><span class="brand-glyph">❀</span><span class="brand-name">Folio</span></div>
+        <h1 class="auth-title">Unlock our shared key.</h1>
+        <p class="auth-sub">Enter the shared phrase to decrypt everything on this device.</p>
+        <input class="field" type="password" placeholder="Shared phrase" data-bind="passphrase" autofocus />
+        <button class="btn-primary" data-action="unlock">Unlock</button>
+        <button class="btn-link" data-action="logout">Sign out</button>
+        <div class="auth-error" data-error></div>
+      </div>
+    </div>
+  </template>
+
+  <template id="tpl-main">
+    <div class="main-shell">
+      <aside class="sidebar">
+        <div class="brand small"><span class="brand-glyph">❀</span><span class="brand-name">Folio</span></div>
+        <nav class="nav">
+          <button class="nav-item" data-tab="chat"><span class="nav-icon">✿</span><span>Chat</span></button>
+          <button class="nav-item" data-tab="diary"><span class="nav-icon">❦</span><span>Diary</span></button>
+          <button class="nav-item" data-tab="memory"><span class="nav-icon">❀</span><span>Memory Lane</span></button>
+          <button class="nav-item" data-tab="settings"><span class="nav-icon">✦</span><span>Settings</span></button>
+        </nav>
+        <div class="who-am-i" data-whoami></div>
+      </aside>
+      <main class="content" data-content></main>
+    </div>
+  </template>
+  </body>
+  <script src="/crypto.js"></script>
+  <script src="/app.js"></script>
+</html>
